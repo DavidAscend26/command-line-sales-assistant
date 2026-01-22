@@ -30,23 +30,25 @@ export type KbSnippet = {
   tags: string[];
 };
 
-export type ToolName = "getDeal" | "searchKb" | "draftFollowupEmail";
+export type ToolName = "getDeal" | "getOpenDeals" | "searchKb" | "draftFollowupEmail";
 
-export type Action =
-  | {
-      type: "tool_call";
-      tool: ToolName;
-      input: Record<string, unknown>;
-    }
-  | {
-      type: "draft_email";
-      dealId: DealId;
-      intent: string;
-      subject: string;
-      body: string;
-      to: string;
-      cc?: string[];
-    };
+export type ToolCallAction = {
+  type: "tool_call";
+  tool: ToolName;
+  input: Record<string, unknown>;
+};
+
+export type DraftEmailAction = {
+  type: "draft_email";
+  dealId: DealId;
+  intent: string;
+  subject: string;
+  body: string;
+  to: string;
+  cc?: string[];
+};
+
+export type Action = ToolCallAction | DraftEmailAction;
 
 export type SourceUsed =
   | { type: "deal"; dealId: DealId }
